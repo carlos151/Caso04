@@ -14,8 +14,12 @@ int main()
     grafo.insertarRelacion("gato", "elefante");
 
     cout << endl;
-    /*cout << "Grafo:" << endl;
-    grafo.print();*/
+    cout << "Grafo:" << endl;
+    grafo.print();
+
+    cout << endl;
+
+    cout << "Cantidad de relaciones de caballo: " << grafo.buscarCantidadRelaciones("caballo") << endl;
 
     cout << "Relaciones de perro: " << endl;
     grafo.buscarRelaciones("perro").print();
