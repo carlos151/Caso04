@@ -25,15 +25,12 @@ int main()
     grafo.buscarRelaciones("perro").print();
 
     CargaDatos cargaDatos;
-    cargaDatos.inicializar();
-    if (cargaDatos.esSustantivo("jugadores"))
-    {
-        cout << "\nEs sustantivo" << endl;
-    }
+    cargaDatos.inicializar(); //grafo);
+    if (cargaDatos.esSustantivo("Alonso"))
+        cout
+            << "\nEs sustantivo" << endl;
     else
-    {
         cout << "\nNo es sustantivo" << endl;
-    }
 
     return 1;
 }

@@ -1,5 +1,9 @@
 #include <iostream>
 #include <unordered_map>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+//#include "Grafo.cpp"
 
 using namespace std;
 
@@ -8,14 +12,17 @@ class CargaDatos
 private:
     unordered_map<string, int> sustantivos;
     unordered_map<string, int> excepciones;
+    unordered_map<string, int> caracteresinvalidos;
 
 public:
     CargaDatos() {}
 
-    void inicializar()
+    void inicializar() //Grafo &Grafo)
     {
         cargarSustantivos();
         cargarExcepciones();
+        cargarCaracteresInvalidos();
+        cargarTexto(); //grafo);
     }
     void cargarSustantivos()
     {
@@ -37,13 +44,12 @@ public:
             "ar", "er", "ir",
             //Gerundios
             "endo", "ando",
-            "ado", "ido", "cho",
-            "to", "so",
+            "ado", "ido",
             //Articulos <=3 letras
             "las", "la", "el",
             "los", "lo", "a",
             "un", "una", "uno"};
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 7; i++)
         {
             agregarExcepciones(excepciones[i]);
         }
@@ -69,8 +75,8 @@ public:
 
         int size = palabra.length();
         string gerundioLargo = palabra.substr(size - 4, size); // {endo, ando}
-        string gerundioMedio = palabra.substr(size - 3, size); // {ado , ido , cho}
-        string infinitivo = palabra.substr(size - 2, size);    // Gerundio Corto o infitivo {"ar", "er", "ir","to", "so"}
+        string gerundioMedio = palabra.substr(size - 3, size); // {ado , ido }
+        string infinitivo = palabra.substr(size - 2, size);    // Infitivo {"ar", "er", "ir"}
         if (!buscarExcepcion(gerundioLargo) && !buscarExcepcion(gerundioMedio) && !buscarExcepcion(infinitivo))
         {
             agregarSustantivo(palabra);
@@ -110,5 +116,76 @@ public:
         {
             cout << "{" << pair.first << "}" << endl;
         }
+    }
+
+    void cargarCaracteresInvalidos()
+    {
+        string caracteres[] = {"«", "»", ",", ":", ".", ";", "(", ")"};
+        for (int i = 0; i < 8; i++)
+        {
+            agregarCaracteresInvalidos(caracteres[i]);
+        }
+    }
+    void agregarCaracteresInvalidos(string caracter)
+    {
+        caracteresinvalidos.insert({caracter, 1});
+    }
+    bool buscarCaracterInvalido(string key)
+    {
+        if (this->caracteresinvalidos.find(key) == this->caracteresinvalidos.end())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    void cargarTexto() //Grafo &grafo)
+    {
+        cout << "\n... Procesando texto ..." << endl;
+        string palabra, caracterI, caracterF;
+        ifstream archivo;
+        archivo.open("texto.txt", ios::in);
+        vector<string> oracion;
+        while (!archivo.eof())
+        {
+            archivo >> palabra;
+            caracterI = palabra[0];
+            caracterF = palabra[palabra.size() - 1];
+
+            if (buscarCaracterInvalido(caracterI))
+                palabra.erase(std::remove(palabra.begin(), palabra.end(), caracterI[0]), palabra.end());
+
+            if (buscarCaracterInvalido(caracterF))
+                palabra.erase(std::remove(palabra.begin(), palabra.end(), caracterF[0]), palabra.end());
+
+            if (caracterF == ".")
+            {
+                oracion.push_back(palabra);
+                procesarOracion(oracion); //grafo);
+                oracion.clear();
+            }
+            else
+                oracion.push_back(palabra);
+        }
+        cout << "Texto procesado." << endl;
+    }
+    void procesarOracion(vector<string> oracion) //, Grafo &grafo)
+    {
+        //Codigo de demostracion para ver las oraciones...
+        for (auto i = oracion.begin(); i != oracion.end(); ++i)
+            cout << *i << " ";
+        cout << endl;
+
+        //Codigo para insertar las relaciones al grafo F(n) = O(n^2) con n = Cantidad de Palabras.
+        /*for (auto i = oracion.begin(); i != oracion.end(); ++i)
+        {
+            for (auto j = oracion.begin(); j != oracion.end(); ++j)
+            {
+                if (i != j && !esSustantivo(*i) && !esSustantivo(*j))
+                {
+                    grafo.insertarRelacion(*i, *j);
+                }
+            }
+        }*/
     }
 };
