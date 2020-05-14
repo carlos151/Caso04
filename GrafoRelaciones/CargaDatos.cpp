@@ -17,7 +17,7 @@ private:
 public:
     CargaDatos() {}
 
-    void inicializar(Grafo* grafo)
+    void inicializar(Grafo *grafo)
     {
         cargarSustantivos();
         cargarExcepciones();
@@ -40,16 +40,22 @@ public:
     void cargarExcepciones()
     {
         string excepciones[] = {
-            //Infitivos
-            "ar", "er", "ir",
-            //Gerundios
-            "endo", "ando",
-            "ado", "ido",
-            //Articulos <=3 letras
-            "las", "la", "el",
-            "los", "lo", "a",
-            "un", "una", "uno"};
-        for (int i = 0; i < 7; i++)
+            "ar",
+            "er",
+            "ir",
+            "an",
+            "en",
+            "án",
+            "én",
+            "ás",
+            "ió",
+            "ía",
+            "endo",
+            "ando",
+            "ado",
+            "ido",
+            "nó"};
+        for (int i = 0; i < 15; i++)
         {
             agregarExcepciones(excepciones[i]);
         }
@@ -68,7 +74,7 @@ public:
     bool esSustantivo(string palabra)
     {
 
-        if (palabra.length() <= 3) // "las", "la", "el", "los", "lo", "a", "un", "una", "uno"
+        if ((palabra.length() - 1) <= 3) // "las", "la", "el", "los", "lo", "a", "un", "una", "uno"
             return false;
         else if (buscarSustantivo(palabra))
             return true;
@@ -139,7 +145,7 @@ public:
         return true;
     }
 
-    void cargarTexto(Grafo* grafo)
+    void cargarTexto(Grafo *grafo)
     {
         cout << "\n... Procesando texto ..." << endl;
         string palabra, caracterI, caracterF;
@@ -161,7 +167,7 @@ public:
             if (caracterF == ".")
             {
                 oracion.push_back(palabra);
-                procesarOracion(oracion,grafo);
+                procesarOracion(oracion, grafo);
                 oracion.clear();
             }
             else
@@ -169,7 +175,7 @@ public:
         }
         cout << "Texto procesado." << endl;
     }
-    void procesarOracion(vector<string> oracion, Grafo* grafo)
+    void procesarOracion(vector<string> oracion, Grafo *grafo)
     {
         //Codigo de demostracion para ver las oraciones...
         /*for (auto i = oracion.begin(); i != oracion.end(); ++i)
