@@ -3,7 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
-//#include "Grafo.cpp"
+#include "Grafo.cpp"
 
 using namespace std;
 
@@ -17,12 +17,12 @@ private:
 public:
     CargaDatos() {}
 
-    void inicializar() //Grafo &Grafo)
+    void inicializar(Grafo* grafo)
     {
         cargarSustantivos();
         cargarExcepciones();
         cargarCaracteresInvalidos();
-        cargarTexto(); //grafo);
+        cargarTexto(grafo);
     }
     void cargarSustantivos()
     {
@@ -139,7 +139,7 @@ public:
         return true;
     }
 
-    void cargarTexto() //Grafo &grafo)
+    void cargarTexto(Grafo* grafo)
     {
         cout << "\n... Procesando texto ..." << endl;
         string palabra, caracterI, caracterF;
@@ -161,7 +161,7 @@ public:
             if (caracterF == ".")
             {
                 oracion.push_back(palabra);
-                procesarOracion(oracion); //grafo);
+                procesarOracion(oracion,grafo);
                 oracion.clear();
             }
             else
@@ -169,23 +169,23 @@ public:
         }
         cout << "Texto procesado." << endl;
     }
-    void procesarOracion(vector<string> oracion) //, Grafo &grafo)
+    void procesarOracion(vector<string> oracion, Grafo* grafo)
     {
         //Codigo de demostracion para ver las oraciones...
-        for (auto i = oracion.begin(); i != oracion.end(); ++i)
+        /*for (auto i = oracion.begin(); i != oracion.end(); ++i)
             cout << *i << " ";
-        cout << endl;
+        cout << endl;*/
 
         //Codigo para insertar las relaciones al grafo F(n) = O(n^2) con n = Cantidad de Palabras.
-        /*for (auto i = oracion.begin(); i != oracion.end(); ++i)
+        for (auto i = oracion.begin(); i != oracion.end(); ++i)
         {
             for (auto j = oracion.begin(); j != oracion.end(); ++j)
             {
-                if (i != j && !esSustantivo(*i) && !esSustantivo(*j))
+                if (i != j && esSustantivo(*i) && esSustantivo(*j))
                 {
-                    grafo.insertarRelacion(*i, *j);
+                    grafo->insertarRelacion(*i, *j);
                 }
             }
-        }*/
+        }
     }
 };
