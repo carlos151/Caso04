@@ -190,7 +190,7 @@ public:
     {
         for (int i = 0; i < result.size(); i++)
         {
-            cout << "\n{ ";
+            cout << "Grupo #" << i + 1 << ":" << result.at(i).size() << "items { ";
             for (int j = 0; j < result.at(i).size(); j++)
             {
                 if (j != result.at(i).size() - 1)
@@ -200,5 +200,6 @@ public:
             }
             cout << " }\n";
         }
+        cout << "Se hicieron " << result.size() << " grupos" << endl;
     }
 };

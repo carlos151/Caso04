@@ -26,10 +26,11 @@ int main()
 
     CargaDatos cargaDatos;
     cargaDatos.inicializar(&grafo);
-    grafo.palabrasMasPoderosas(5);
+    //grafo.palabrasMasPoderosas(5);
     //grafo.palabrasMasPoderP("algunas");
     //grafo.printRelaciones();
-    grafo.GruposPoderosos("camino", 3, 4);
+    cout << "Cantidad de Relaciones: " << grafo.buscarCantidadRelaciones("habitualmente") << endl;
+    grafo.GruposPoderosos("chamanes", 20, 50);
     //grafo.print();
     /*if (cargaDatos.esSustantivo("Alonso"))
         cout
