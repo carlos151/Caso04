@@ -28,7 +28,8 @@ int main()
     cargaDatos.inicializar(&grafo);
     grafo.palabrasMasPoderosas(5);
     //grafo.palabrasMasPoderP("algunas");
-    grafo.printRelaciones();
+    //grafo.printRelaciones();
+    grafo.GruposPoderosos("camino", 3, 4);
     //grafo.print();
     /*if (cargaDatos.esSustantivo("Alonso"))
         cout
