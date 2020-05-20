@@ -36,4 +36,8 @@ class Aristas{
         void print(string sustantivo){
             cout << "{" << sustantivo << ": " << aristas.at(sustantivo) << "}\n";
         }
+
+        unordered_map<string,int> getMap(){
+            return aristas;
+        }
 };

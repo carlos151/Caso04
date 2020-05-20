@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unordered_map>
+#include <algorithm>
 #include "Aristas.cpp"
 
 using namespace std;
@@ -36,17 +37,7 @@ class Grafo{
                 grafo.insert({sustantivoA,aristas});
                 cantidadRelaciones.insert({sustantivoA,0});
             }
-            if(buscarKey(sustantivoB)){
-                grafo.at(sustantivoB).insertarRelacion(sustantivoA);
-            }
-            else{
-                Aristas aristas;
-                aristas.insertarRelacion(sustantivoA);
-                grafo.insert({sustantivoB,aristas});
-                cantidadRelaciones.insert({sustantivoB,0});
-            }
             cantidadRelaciones.at(sustantivoA) += 1;
-            cantidadRelaciones.at(sustantivoB) += 1;
         }
 
         Aristas buscarRelaciones(string sustantivo){
@@ -71,5 +62,40 @@ class Grafo{
             cout << "{" << sustantivo << ": ";
             grafo.at(sustantivo).print();
             cout << "}" << endl;
+        }
+
+        bool static comparar(pair<string,int> a, pair<string,int> b) {
+            return (a.second > b.second);
+        }
+
+        void palabrasMasPoderosas(int cantidad){
+            vector<pair<string,int>> sortRelaciones(cantidadRelaciones.begin(),cantidadRelaciones.end());
+            sort(sortRelaciones.begin(),sortRelaciones.end(),comparar);
+            cout << "Las " << cantidad << " palabras más poderosas:" << endl;
+            for(int iterador = 0; iterador < cantidad; iterador++){
+                cout << sortRelaciones.at(iterador).first << endl;
+            }
+            cout << endl;
+        }
+
+        bool esLaRelacionMasPoderosa(string palabra,string palabraP){
+            unordered_map<string,int> relacionesDePalabra = buscarRelaciones(palabra).getMap();
+            vector<pair<string,int>> sortRelaciones(relacionesDePalabra.begin(),relacionesDePalabra.end());
+            sort(sortRelaciones.begin(),sortRelaciones.end(),comparar);
+            if(sortRelaciones.at(0).first == palabraP){
+                return true;
+            }
+            return false;
+        }
+
+        void palabrasMasPoderP(string palabraP){
+            unordered_map<string,int> relacionesDeP = buscarRelaciones(palabraP).getMap();
+            cout << "Palabras sobre la que la palabra " << palabraP << " tiene más poder:" << endl;
+            for(auto iterador = relacionesDeP.begin(); iterador != relacionesDeP.end();iterador++){
+                if(esLaRelacionMasPoderosa(iterador->first,palabraP)){
+                    cout << iterador->first << endl;
+                }
+            }
+            cout << endl;
         }
 };

@@ -20,13 +20,16 @@ int main()
     cout << endl;
 
     cout << "Cantidad de relaciones de caballo: " << grafo.buscarCantidadRelaciones("caballo") << endl;
-
+    
     cout << "Relaciones de perro: " << endl;
     grafo.buscarRelaciones("perro").print();*/
 
     CargaDatos cargaDatos;
     cargaDatos.inicializar(&grafo);
-    grafo.print();
+    grafo.palabrasMasPoderosas(5);
+    //grafo.palabrasMasPoderP("algunas");
+    grafo.printRelaciones();
+    //grafo.print();
     /*if (cargaDatos.esSustantivo("Alonso"))
         cout
             << "\nEs sustantivo" << endl;
