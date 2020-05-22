@@ -130,7 +130,7 @@ public:
 
     int obtenerValorAdecuado(vector<pair<string, int>> posibles, Aristas *visitados)
     {
-        for (int i = 0; i < posibles.size(); i++)
+        for (unsigned int i = 0; i < posibles.size(); i++)
         {
             if (!visitados->buscarKey(posibles.at(i).first))
                 return i;
@@ -167,7 +167,8 @@ public:
         vector<pair<string, int>> sortRelaciones = getVectorOrdenado(relaciones);
         vector<vector<string>> result;
         visitados.insertarRelacion(palabra);
-        int iterador = 0, contador = 0;
+        int iterador = 0;
+        unsigned int contador = 0;
         while (iterador < cantidadGrupos && contador != sortRelaciones.size())
         {
             if (!visitados.buscarKey(sortRelaciones.at(contador).first))
@@ -188,10 +189,10 @@ public:
 
     void imprimirGruposPodersos(vector<vector<string>> result)
     {
-        for (int i = 0; i < result.size(); i++)
+        for (unsigned int i = 0; i < result.size(); i++)
         {
             cout << "Grupo #" << i + 1 << ":" << result.at(i).size() << "items { ";
-            for (int j = 0; j < result.at(i).size(); j++)
+            for (unsigned int j = 0; j < result.at(i).size(); j++)
             {
                 if (j != result.at(i).size() - 1)
                     cout << result.at(i).at(j) << " , ";
